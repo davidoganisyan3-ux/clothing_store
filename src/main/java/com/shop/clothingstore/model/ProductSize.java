@@ -16,19 +16,15 @@ public class ProductSize {
 
     private String size;
     private int quantity;
-
+//геттеры
     public Long getId(){return id;}
     public Product getProduct(){return product;}
     public String getSize(){return size;}
     public int getQuantity(){return quantity;}
-
+//сеттеры
     public void setProduct(Product product){
         this.product = product;
     }
-    public void setSize(String size){
-        this.size=size;
-    }
-    public void setQuantity(int quantity){
-        this.quantity=quantity;
-    }
+    public void setSize(String size){this.size=size;}
+    public void setQuantity(int quantity){this.quantity=quantity;}
 }

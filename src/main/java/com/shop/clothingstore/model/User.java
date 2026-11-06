@@ -14,7 +14,7 @@ public class User {
 
     @Column(name = "password_hash")
     private String passwordHash;
-
+//сеттеры
     public void setName(String name) {
         this.name = name;
     }
@@ -26,7 +26,7 @@ public class User {
     public void setPasswordHash(String passwordHash) {
         this.passwordHash = passwordHash;
     }
-
+//геттеры
     public String getPasswordHash() {return passwordHash;}
 
     public String getEmail() {return email;}
