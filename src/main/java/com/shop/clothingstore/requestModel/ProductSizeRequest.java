@@ -1,4 +1,9 @@
 package com.shop.clothingstore.requestModel;
 
-public record ProductSizeRequest(String size,int quantity) {
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+
+public record ProductSizeRequest(
+        @NotBlank String size,
+        @Positive int quantity) {
 }

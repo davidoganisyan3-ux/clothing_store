@@ -1,4 +1,9 @@
 package com.shop.clothingstore.requestModel;
 
-public record OrderItemRequest(Long productSizeId,int quantity){
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+
+public record OrderItemRequest(
+        @NotNull @Positive Long productSizeId,
+        @Positive int quantity){
 }

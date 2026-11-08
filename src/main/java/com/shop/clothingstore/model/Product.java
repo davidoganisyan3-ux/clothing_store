@@ -15,7 +15,7 @@ public class Product {
     private long id;
 
     private String name;
-    private String disciption;
+    private String description;
     private BigDecimal price;
 
     @ManyToOne
@@ -24,14 +24,14 @@ public class Product {
 //геттеры
     public Long getId(){return id;}
     public String getName(){return name;}
-    public String getDescription(){return disciption;}
+    public String getDescription(){return description;}
     public BigDecimal getPrice(){return price;}
     public Category getCategory(){return category;}
 //сеттеры
     public void setName(String name){
         this.name=name;
     }
-    public void setDescription(String description){this.disciption=description;}
+    public void setDescription(String description){this.description=description;}
     public void setPrice(BigDecimal price){
         this.price=price;
     }

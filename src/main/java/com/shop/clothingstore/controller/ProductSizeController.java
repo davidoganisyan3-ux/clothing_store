@@ -5,6 +5,7 @@ import com.shop.clothingstore.model.ProductSize;
 import com.shop.clothingstore.requestModel.ProductSizeRequest;
 import com.shop.clothingstore.requestModel.QuantityRequest;
 import com.shop.clothingstore.service.ProductSizeService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,12 +30,12 @@ public class ProductSizeController {
 
         @PostMapping("/products/{productId}/sizes")
            public ProductSize create(@PathVariable Long productId,
-                   @RequestBody ProductSizeRequest request){
+                                     @Valid @RequestBody ProductSizeRequest request){
                 return productSizeService.create(productId,request);
         }
 
         @PatchMapping("/product_sizes/{sizeId}")
-    public ProductSize updateQuantity(@PathVariable Long sizeId, @RequestBody QuantityRequest request){
+    public ProductSize updateQuantity(@PathVariable Long sizeId,@Valid @RequestBody QuantityRequest request){
         return productSizeService.updateQuantity(sizeId,request);
         }
 

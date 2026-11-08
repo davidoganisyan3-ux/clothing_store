@@ -29,16 +29,9 @@ public class ProductSizeService {
 
     public ProductSize create(Long productId, ProductSizeRequest request) {
 
-        if(request.size()==null||request.size().isBlank()){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Должен быть размер");
-        }
-        if(request.quantity()<0){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Количество товаров не может быть отрицательным");
-        }
 
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Такого продукта нет"));
-
 
 
         ProductSize productSize = new ProductSize();
@@ -54,9 +47,6 @@ public class ProductSizeService {
     }
 
     public ProductSize updateQuantity(Long sizeId, QuantityRequest request){
-        if(request.quantity()<0){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Количетсво не может быть отрицательным");
-        }
 
         ProductSize productSize = productSizeRepository.findById(sizeId)
                 .orElseThrow(() ->new ResponseStatusException(HttpStatus.NOT_FOUND,"Такого размера нет"));

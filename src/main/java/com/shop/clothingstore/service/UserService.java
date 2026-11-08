@@ -25,10 +25,7 @@ public class UserService {
     }
 
     public UserResponse register(UserRequest request){
-        if(request.email()==null||request.email().isBlank()||request.password()==null||
-                request.password().isBlank()||request.name()==null||request.name().isBlank()){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Не корктный ввод данных");
-        }
+
         if(userRepository.existsByEmail(request.email())){
             throw new ResponseStatusException(HttpStatus.CONFLICT,"Такой email уже существует");
         }
@@ -61,7 +58,6 @@ public class UserService {
 
 
     }
-
 
 
     public List<UserResponse> getAll(){

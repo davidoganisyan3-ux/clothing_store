@@ -42,10 +42,6 @@ public class OrderService {
     @Transactional
     public OrderResponse created(OrderRequest request){
 
-        if(request.userId()==null||request.items()==null||request.items().isEmpty()){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Пользователь или предметы отсутствуют");
-        }
-
         User user = userRepository.findById(request.userId())
                 .orElseThrow(() -> new ResponseStatusException
                         (HttpStatus.NOT_FOUND,"Такого пользователя нет"));
@@ -57,9 +53,7 @@ public class OrderService {
         Order saveOrder = orderRepository.save(order);
 
         for(OrderItemRequest itemRequest: request.items()){
-            if(itemRequest==null||itemRequest.quantity()<0){
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Неверный ввод предмет");
-            }
+
 
             ProductSize productSize = productSizeRepository.findById(itemRequest.productSizeId())
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Такого размера нет"));

@@ -4,6 +4,7 @@ import com.shop.clothingstore.requestModel.ProductRequest;
 
 import com.shop.clothingstore.service.ProductService;
 import com.shop.clothingstore.model.Product;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,7 +28,7 @@ public class ProductController {
     }
 
     @PostMapping("/products")
-    public Product create(@RequestBody ProductRequest request){
+    public Product create(@Valid  @RequestBody ProductRequest request){
         return productService.create(request);
     }
 }

@@ -28,19 +28,11 @@ public class ProductService {
     }
 
     public Product create( ProductRequest request){
-        if(request.name()==null||request.name().isBlank()){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Название не может быть пустым");
-        }
-        if(request.price()==null||request.price().compareTo(BigDecimal.ZERO)<=0){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Цена должна быть больше нуля");
-        }
-        if(request.categoryId()==null){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Должна быть категория");
-        }
-        Category category = categoryRepository.findById(request.categoryId()).orElse(null);
-        if(category==null){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Такой категории нет");
-        }
+
+
+        Category category = categoryRepository.findById(request.categoryId())
+                .orElseThrow(()-> new ResponseStatusException(HttpStatus.BAD_REQUEST,"Такой категории нет"));
+
         Product product = new Product();
         product.setName(request.name());
         product.setDescription(request.description());

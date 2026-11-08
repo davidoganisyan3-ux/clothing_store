@@ -5,6 +5,7 @@ import com.shop.clothingstore.requestModel.LoginRequest;
 import com.shop.clothingstore.requestModel.UserRequest;
 import com.shop.clothingstore.responseModel.UserResponse;
 import com.shop.clothingstore.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,12 +28,12 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public UserResponse  register(@RequestBody  UserRequest request){
+    public UserResponse  register(@Valid @RequestBody  UserRequest request){
        return userService.register(request);
     }
 
     @PostMapping("/login")
-    public UserResponse login(@RequestBody LoginRequest request){
+    public UserResponse login(@Valid @RequestBody LoginRequest request){
         return userService.login(request);
     }
 }
