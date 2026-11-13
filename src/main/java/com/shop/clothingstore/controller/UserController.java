@@ -1,8 +1,8 @@
 package com.shop.clothingstore.controller;
 
-import com.shop.clothingstore.model.User;
 import com.shop.clothingstore.requestModel.LoginRequest;
 import com.shop.clothingstore.requestModel.UserRequest;
+import com.shop.clothingstore.responseModel.LoginResponse;
 import com.shop.clothingstore.responseModel.UserResponse;
 import com.shop.clothingstore.service.UserService;
 import jakarta.validation.Valid;
@@ -33,7 +33,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public UserResponse login(@Valid @RequestBody LoginRequest request){
+    public LoginResponse login(@Valid @RequestBody LoginRequest request){
         return userService.login(request);
     }
 }

@@ -4,6 +4,7 @@ import com.shop.clothingstore.model.User;
 import com.shop.clothingstore.repository.UserRepository;
 import com.shop.clothingstore.requestModel.LoginRequest;
 import com.shop.clothingstore.requestModel.UserRequest;
+import com.shop.clothingstore.responseModel.LoginResponse;
 import com.shop.clothingstore.responseModel.UserResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -11,17 +12,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService {
 
    private final UserRepository userRepository;
+   private final JwtService jwtService;
 
    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-    public UserService(UserRepository userRepository){
+    public UserService(UserRepository userRepository,
+                       JwtService jwtService){
         this.userRepository = userRepository;
+        this.jwtService = jwtService;
     }
 
     public UserResponse register(UserRequest request){
@@ -42,7 +45,7 @@ public class UserService {
     }
 
 
-    public UserResponse login(LoginRequest request){
+    public LoginResponse login(LoginRequest request){
 
         User user = userRepository.findByEmail(request.email())
                 .orElseThrow(()-> new ResponseStatusException
@@ -52,9 +55,9 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"Неверный логин или пароль");
         }
 
-        return new UserResponse(user.getId(),user.getName(),user.getEmail());
+        String token = jwtService.generateToken(user.getId());
 
-
+        return new LoginResponse(token,new UserResponse(user.getId(),user.getName(),user.getEmail()));
 
 
     }
