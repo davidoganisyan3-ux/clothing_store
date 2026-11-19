@@ -9,8 +9,12 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
+
+
     private String name;
     private String email;
+    @Column(nullable = false)
+    private String role = "USER";
 
     @Column(name = "password_hash")
     private String passwordHash;
@@ -26,6 +30,9 @@ public class User {
     public void setPasswordHash(String passwordHash) {
         this.passwordHash = passwordHash;
     }
+    public void setRole(String role) {
+        this.role = role;
+    }
 //геттеры
     public String getPasswordHash() {return passwordHash;}
 
@@ -34,4 +41,7 @@ public class User {
     public String getName() {return name;}
 
     public Long getId() {return id;}
+    public String getRole() {return role;}
 }
+
+

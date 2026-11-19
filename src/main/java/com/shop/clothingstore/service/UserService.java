@@ -40,7 +40,7 @@ public class UserService {
 
         userRepository.save(user);
 
-        return new UserResponse(user.getId(),user.getName(),user.getEmail());
+        return new UserResponse(user.getId(),user.getName(),user.getEmail(),user.getRole());
 
     }
 
@@ -55,9 +55,9 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"Неверный логин или пароль");
         }
 
-        String token = jwtService.generateToken(user.getId());
+        String token = jwtService.generateToken(user.getId(), user.getRole());
 
-        return new LoginResponse(token,new UserResponse(user.getId(),user.getName(),user.getEmail()));
+        return new LoginResponse(token,new UserResponse(user.getId(),user.getName(),user.getEmail(),user.getRole()));
 
 
     }
@@ -66,7 +66,7 @@ public class UserService {
     public List<UserResponse> getAll(){
 
         return userRepository.findAll().stream()
-                .map(u -> new UserResponse(u.getId(), u.getName(), u.getEmail()))
+                .map(u -> new UserResponse(u.getId(), u.getName(), u.getEmail(),u.getRole()))
                 .toList();
     }
 

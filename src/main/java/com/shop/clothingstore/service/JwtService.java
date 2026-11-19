@@ -21,10 +21,11 @@ public class JwtService {
         this.expirationMs=expirationMs;
     }
 
-    public String generateToken(Long userId){
+    public String generateToken(Long userId,String role){
         Date now = new Date();
         return Jwts.builder()
                 .subject(String.valueOf(userId))
+                .claim("role", role)
                 .issuedAt(now)
                 .expiration(new Date(now.getTime() + expirationMs))
                 .signWith(key)
@@ -39,6 +40,15 @@ public class JwtService {
                 .getPayload()
                 .getSubject();
         return Long.valueOf(subject);
+    }
+    public String extractRole(String token){
+        String role = Jwts.parser()
+                .verifyWith(key)
+                .build()
+                .parseSignedClaims(token)
+                .getPayload()
+                .get("role",String.class);
+        return  role;
     }
 
 }

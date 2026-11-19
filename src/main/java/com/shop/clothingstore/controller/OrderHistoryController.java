@@ -3,7 +3,6 @@ package com.shop.clothingstore.controller;
 import com.shop.clothingstore.responseModel.OrderHistoryResponse;
 import com.shop.clothingstore.service.JwtService;
 import com.shop.clothingstore.service.OrderHistoryService;
-import io.jsonwebtoken.JwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,9 +31,12 @@ public class OrderHistoryController {
                                                  Authentication authentication)  {
 
         Long currentUserTd = (Long) authentication.getPrincipal();
+        boolean isAdmin = authentication.getAuthorities()
+                .stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
 
 
-        if(!userId.equals(currentUserTd)){
+        if(!isAdmin&&!userId.equals(currentUserTd)){
             throw new ResponseStatusException(HttpStatus.FORBIDDEN,"Нельзя смотреть чужие заказы");
         }
 
