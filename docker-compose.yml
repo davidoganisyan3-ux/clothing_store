@@ -1,0 +1,30 @@
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: clothing_store
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+        - pgdata:/var/lib/postgresql/data
+    healthcheck:
+          test: ["CMD-SHELL","pg_isready -U postgres -d clothing_store"]
+          interval: 5s
+          timeout: 5s
+          retries: 10
+
+  app:
+   build: .
+   ports:
+      - "8080:8080"
+   environment:
+    DB_URL: jdbc:postgresql://db:5432/clothing_store
+    DB_PASSWORD: ${DB_PASSWORD}
+    JWT_SECRET: ${JWT_SECRET}
+    SPRING_JPA_HIBERNATE_DDL_AUTO: update
+   depends_on:
+     db:
+       condition: service_healthy
+
+volumes:
+  pgdata:
