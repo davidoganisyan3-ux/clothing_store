@@ -35,8 +35,9 @@ public class SecurityConfig {
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/user/*/orders").authenticated()
+                        .requestMatchers(HttpMethod.POST,"/categories/create").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST,"/products").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST,"/products/*/sizes").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST,"/products/*/size/create").hasRole("ADMIN")
                         .anyRequest().permitAll());
 
         return http.build();

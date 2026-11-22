@@ -28,7 +28,7 @@ public class ProductSizeController {
          return productSizeService.getByProduct(productId);
         }
 
-        @PostMapping("/products/{productId}/sizes")
+        @PostMapping("/products/{productId}/size/create")
            public ProductSize create(@PathVariable Long productId,
                                      @Valid @RequestBody ProductSizeRequest request){
                 return productSizeService.create(productId,request);
