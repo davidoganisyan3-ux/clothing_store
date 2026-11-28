@@ -30,13 +30,13 @@ public class OrderHistoryController {
     public List<OrderHistoryResponse> getHistory(@PathVariable Long userId,
                                                  Authentication authentication)  {
 
-        Long currentUserTd = (Long) authentication.getPrincipal();
+        Long currentUserId = (Long) authentication.getPrincipal();
         boolean isAdmin = authentication.getAuthorities()
                 .stream()
                 .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
 
 
-        if(!isAdmin&&!userId.equals(currentUserTd)){
+        if(!isAdmin&&!userId.equals(currentUserId)){
             throw new ResponseStatusException(HttpStatus.FORBIDDEN,"Нельзя смотреть чужие заказы");
         }
 

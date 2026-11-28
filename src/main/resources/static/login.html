@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Вход — Магазин одежды</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="top">
+    <h1 class="logo">Магазин одежды</h1>
+    <nav class="nav" aria-label="Основное меню">
+      <a href="/index.html">Каталог</a>
+      <a href="/cart.html">Корзина</a>
+      <span id="auth-nav" class="auth-nav"></span>
+    </nav>
+  </header>
+
+  <main class="auth-page">
+    <div class="filters" role="group" aria-label="Вход или регистрация">
+      <button id="tab-login" class="chip" type="button" aria-pressed="true">Вход</button>
+      <button id="tab-register" class="chip" type="button" aria-pressed="false">Регистрация</button>
+    </div>
+
+    <form id="login-form" class="auth-form">
+      <label>Email
+        <input type="email" name="email" autocomplete="email" required>
+      </label>
+      <label>Пароль
+        <input type="password" name="password" autocomplete="current-password" required>
+      </label>
+      <button class="buy" type="submit">Войти</button>
+    </form>
+
+    <form id="register-form" class="auth-form" hidden>
+      <label>Имя
+        <input type="text" name="name" autocomplete="name" required>
+      </label>
+      <label>Email
+        <input type="email" name="email" autocomplete="email" required>
+      </label>
+      <label>Пароль (не короче 6 символов)
+        <input type="password" name="password" autocomplete="new-password" minlength="6" required>
+      </label>
+      <button class="buy" type="submit">Зарегистрироваться</button>
+    </form>
+
+    <p id="form-error" class="form-error" role="alert" hidden></p>
+  </main>
+
+  <script src="/common.js"></script>
+  <script src="/login.js"></script>
+</body>
+</html>

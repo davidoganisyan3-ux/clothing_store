@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Магазин одежды</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="top">
+    <h1 class="logo">Магазин одежды</h1>
+    <nav class="nav" aria-label="Основное меню">
+      <a href="index.html" aria-current="page">Каталог</a>
+      <a id="cart-badge" class="cart-badge" href="/cart.html">Корзина: 0</a>
+      <span id="auth-nav" class="auth-nav"></span>
+    </nav>
+  </header>
+
+  <main>
+    <div id="filters" class="filters" role="group" aria-label="Категории"></div>
+    <p id="status" class="status" role="status" hidden></p>
+    <section id="catalog" class="catalog" aria-label="Товары"></section>
+  </main>
+
+  <dialog id="size-dialog" class="dialog" aria-labelledby="dialog-title">
+    <h2 id="dialog-title" class="dialog-title"></h2>
+    <p id="dialog-price" class="dialog-price"></p>
+    <div id="size-options" class="size-options" role="group" aria-label="Размеры"></div>
+    <p id="size-hint" class="size-hint" role="status"></p>
+    <div class="dialog-actions">
+      <button id="cancel-button" class="ghost" type="button">Отмена</button>
+      <button id="add-button" class="buy" type="button" disabled>В корзину</button>
+    </div>
+  </dialog>
+
+  <script src="/common.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>

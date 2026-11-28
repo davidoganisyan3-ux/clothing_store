@@ -1,0 +1,425 @@
+:root {
+  --paper: #f6f6f4;
+  --card: #ffffff;
+  --ink: #1c2230;
+  --muted: #5d6578;
+  --denim: #2d4380;
+  --denim-dark: #223369;
+  --line: #dcdde2;
+  --tone-0: #dce3f2; /* светлый деним */
+  --tone-1: #ebe4d4; /* некрашеный хлопок */
+  --tone-2: #d9e4dc; /* шалфей */
+  --tone-3: #ecdad5; /* пыльная роза */
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Onest", system-ui, sans-serif;
+  line-height: 1.5;
+}
+
+.top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 32px clamp(16px, 5vw, 64px) 8px;
+}
+
+.logo {
+  margin: 0;
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.nav a {
+  color: var(--muted);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 6px 0;
+  border-bottom: 2px solid transparent;
+}
+.nav a[aria-current="page"] {
+  color: var(--ink);
+  border-bottom-color: var(--denim);
+}
+.nav a:hover { color: var(--ink); }
+
+main { padding: 16px clamp(16px, 5vw, 64px) 64px; }
+
+/* --- Фильтры по категориям --- */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+
+.chip {
+  font: inherit;
+  font-weight: 500;
+  padding: 8px 18px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--ink);
+  cursor: pointer;
+}
+.chip:hover { border-color: var(--denim); }
+.chip[aria-pressed="true"] {
+  background: var(--denim);
+  border-color: var(--denim);
+  color: #fff;
+}
+
+/* --- Сообщения (ошибка / пусто) --- */
+.status {
+  padding: 24px;
+  border: 1px dashed var(--line);
+  border-radius: 14px;
+  color: var(--muted);
+  background: var(--card);
+}
+.status[hidden] { display: none; }
+
+/* --- Сетка товаров --- */
+.catalog {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 24px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+/* Пока нет фотографий, вместо них цветная плитка со «строчкой» */
+.tile {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  display: flex;
+  align-items: flex-end;
+  padding: 20px;
+  background: var(--tone-0);
+}
+.tile::before {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  border: 1.5px dashed rgba(28, 34, 48, 0.3);
+  border-radius: 6px;
+  pointer-events: none;
+}
+.tile[data-tone="1"] { background: var(--tone-1); }
+.tile[data-tone="2"] { background: var(--tone-2); }
+.tile[data-tone="3"] { background: var(--tone-3); }
+
+.tile-label {
+  position: relative;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 6px;
+  padding: 16px 18px 18px;
+}
+
+.card-name {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.card-desc {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 14px;
+}
+
+.price {
+  font-size: 1.25rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.buy {
+  font: inherit;
+  font-weight: 600;
+  padding: 10px 20px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--denim);
+  color: #fff;
+  cursor: pointer;
+}
+.buy:hover { background: var(--denim-dark); }
+
+:focus-visible {
+  outline: 3px solid #86a0f0;
+  outline-offset: 2px;
+}
+
+@media (max-width: 520px) {
+  .top { flex-direction: column; gap: 8px; }
+}
+
+/* --- Шаг 2: корзина и окно выбора размера --- */
+.nav {
+  display: flex;
+  align-items: baseline;
+  gap: 24px;
+}
+
+.cart-badge {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.chip:disabled {
+  opacity: 0.4;
+  text-decoration: line-through;
+  cursor: not-allowed;
+}
+.chip:disabled:hover { border-color: var(--line); }
+
+.dialog {
+  width: min(420px, 92vw);
+  padding: 28px;
+  border: 0;
+  border-radius: 14px;
+  background: var(--card);
+  color: var(--ink);
+  font-family: inherit;
+  box-shadow: 0 20px 60px rgba(28, 34, 48, 0.3);
+}
+.dialog::backdrop { background: rgba(28, 34, 48, 0.45); }
+
+.dialog-title {
+  margin: 0 0 4px;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.dialog-price {
+  margin: 0 0 20px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--denim);
+}
+
+.size-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.size-hint {
+  min-height: 1.5em;
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.ghost {
+  font: inherit;
+  font-weight: 500;
+  padding: 10px 20px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+}
+.ghost:hover { border-color: var(--ink); }
+
+.buy:disabled {
+  background: #b9bfd1;
+  cursor: not-allowed;
+}
+
+/* --- Шаг 3: страница корзины --- */
+.cart-page { max-width: 820px; }
+
+.page-title {
+  margin: 0 0 20px;
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.status a { color: var(--denim); font-weight: 600; }
+
+.cart-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cart-line {
+  display: grid;
+  grid-template-columns: 1fr auto auto auto;
+  align-items: center;
+  gap: 20px;
+  padding: 16px 18px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+
+.cart-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.cart-size { color: var(--muted); font-size: 0.95rem; }
+
+.qty {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.qty-count {
+  min-width: 2ch;
+  text-align: center;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.qty-button {
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--ink);
+  font: inherit;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+.qty-button:hover { border-color: var(--denim); }
+
+.cart-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 24px;
+  padding: 20px 18px;
+  border-top: 2px solid var(--ink);
+}
+.cart-summary[hidden] { display: none; }
+.cart-total { margin: 0; font-size: 1.2rem; }
+
+@media (max-width: 620px) {
+  .cart-line {
+    grid-template-columns: 1fr auto;
+    row-gap: 12px;
+  }
+}
+
+.qty-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.qty-button:disabled:hover { border-color: var(--line); }
+
+/* --- Шаг 4: вход, регистрация, оформление заказа --- */
+[hidden] { display: none !important; }
+
+.auth-nav {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 12px;
+}
+.hello { font-weight: 600; }
+
+.link-button {
+  font: inherit;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  text-decoration: underline;
+  cursor: pointer;
+}
+.link-button:hover { color: var(--ink); }
+
+.auth-page { max-width: 420px; }
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+.auth-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-weight: 500;
+}
+.auth-form input {
+  font: inherit;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper);
+  color: var(--ink);
+}
+.auth-form input:focus-visible {
+  border-color: var(--denim);
+  outline-offset: 0;
+}
+
+.form-error {
+  margin: 16px 0 0;
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: #f7e3e0;
+  color: #8a2c20;
+}
+
+.order-done {
+  padding: 28px;
+  border-radius: 14px;
+  background: var(--tone-2);
+}
+.order-done h3 { margin: 0 0 6px; font-size: 1.3rem; }
+.order-done p { margin: 0; }
+.order-done a { color: var(--denim); font-weight: 600; }
